@@ -1,0 +1,22 @@
+version: "3.2"
+
+services:
+  crawler:
+    image: energy_api_collector/crawler
+    build: ./crawler
+    restart: always
+    environment:
+      - NEXTCLOUD_URL=""
+      - NEXTCLOUD_USER_NAME=""
+      - NEXTCLOUD_PASSWORD=""
+      - NEXTCLOUD_BASE_FOLDER="energy_api_collector/data/"
+
+  compromizer:
+    image: energy_api_collector/compromizer
+    build: ./compromizer
+    restart: always
+    environment:
+      - NEXTCLOUD_URL=""
+      - NEXTCLOUD_USER_NAME=""
+      - NEXTCLOUD_PASSWORD=""
+      - NEXTCLOUD_BASE_FOLDER="energy_api_collector/data/"

@@ -1,0 +1,1 @@
+7 12 * * * python3 /code/app/main.py >> /logfile
