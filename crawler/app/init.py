@@ -1,5 +1,6 @@
 import os
 import logging
+import sys
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(module)s - %(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S',
@@ -28,3 +29,14 @@ for config_name in [
         raise ValueError(f"The environment variable '{config_name}' cannot be empty.")
 
 logger.info(f"Initialized and loaded environment variables into config.")
+
+
+SPECIAL_ARGUMENT = False
+if len(sys.argv) > 1:
+    first_argument = sys.argv[1]
+
+    if first_argument.lower() == "intraday":
+        SPECIAL_ARGUMENT = "intraday"
+
+    if first_argument.lower() == "historic":
+        SPECIAL_ARGUMENT = "historic"

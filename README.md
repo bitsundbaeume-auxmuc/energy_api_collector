@@ -1,5 +1,7 @@
 # Energy API Collector
-Collects json-data from eon based grids and stores them inside a nextcloud. To save space, the files get daily compromized to a 7z-file
+Collects json-data from eon based grids and stores them inside a nextcloud. 
+The current values are crawled every five minutes, the historic and intraday data once a day.
+To save space, the files get daily compromized to a 7z-file
 
 # How to start
 ## Create a nextcloud account

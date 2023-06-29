@@ -3,6 +3,7 @@ import json
 import requests
 from datetime import datetime
 
+import init as CONFIG
 import webdav_connector
 
 
@@ -13,8 +14,14 @@ def get_json_from_url(url: str):
 
 
 def get_json_for_region(entity_data: dict):
-    entity_data['meterData'] = get_json_from_url(f"https://api-energiemonitor.eon.com/meter-data?regionCode=" +
-                                                 entity_data['regionCode'] + "&tenantId=" + entity_data['tenantId'])
+    if CONFIG.SPECIAL_ARGUMENT:
+        api_res = CONFIG.SPECIAL_ARGUMENT
+    else:
+        api_res = "meter"
+
+    entity_data[f"{api_res}Data"] = get_json_from_url(f"https://api-energiemonitor.eon.com/{api_res}-data?regionCode=" +
+                                                      entity_data['regionCode'] + "&tenantId=" +
+                                                      entity_data['tenantId'])
     return entity_data
 
 
@@ -61,7 +68,11 @@ def collect_data():
 
 
 def save_collected_data(collected_data: dict):
-    webdav_connector.save_file('crawled_json/', datetime.now().strftime('%Y_%m_%d_%H_%M_%S') + '.json',
+    file_base_name = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
+    if CONFIG.SPECIAL_ARGUMENT:
+        file_base_name = f"{file_base_name}_{CONFIG.SPECIAL_ARGUMENT}"
+
+    webdav_connector.save_file('crawled_json/', f"{file_base_name}.json",
                                json.dumps(collected_data, indent=2, separators=(',', ': ')))
 
 
