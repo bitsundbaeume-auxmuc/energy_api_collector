@@ -6,8 +6,8 @@ RUN apk add build-base
 RUN apk add linux-headers
 
 COPY requirements.txt requirements.txt
-COPY crontab crontab
 RUN pip install -r requirements.txt
+COPY crontab crontab
 
 COPY app /code/app
 

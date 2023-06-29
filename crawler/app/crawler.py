@@ -4,6 +4,7 @@ import requests
 from datetime import datetime
 
 import init as CONFIG
+from init import logger
 import webdav_connector
 
 
@@ -72,10 +73,17 @@ def save_collected_data(collected_data: dict):
     if CONFIG.SPECIAL_ARGUMENT:
         file_base_name = f"{file_base_name}_{CONFIG.SPECIAL_ARGUMENT}"
 
-    webdav_connector.save_file('crawled_json/', f"{file_base_name}.json",
-                               json.dumps(collected_data, indent=2, separators=(',', ': ')))
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            [executor.submit(webdav_connector.save_file, 'crawled_json/',
+                             f"{file_base_name}_{region_line['regionCode']}.json",
+                             json.dumps(region_line, indent=2, separators=(',', ': '))
+                             ) for region_line in collected_data['entities']]
+        collected_data['entities'] = []
+    return webdav_connector.save_file('crawled_json/', f"{file_base_name}.json",
+                                      json.dumps(collected_data, indent=2, separators=(',', ': ')))
 
 
 def run_crawler():
     data = collect_data()
     save_collected_data(data)
+    logger.info('Finished Crawler Run.')

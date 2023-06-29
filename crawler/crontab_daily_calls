@@ -1,0 +1,2 @@
+2 12 * * 2,4 python3 /code/app/main.py intraday >> /logfile
+2 12 * * 3,5 python3 /code/app/main.py historic >> /logfile
