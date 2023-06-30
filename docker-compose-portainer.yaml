@@ -6,11 +6,9 @@ services:
     build: ./crawler
     privileged: true
     restart: unless-stopped
+    env_file:
+      - stack.env
     environment:
-      - NEXTCLOUD_URL=
-      - NEXTCLOUD_USER_NAME=
-      - NEXTCLOUD_PASSWORD=
-      - NEXTCLOUD_BASE_FOLDER=energy_api_collector/data/
       - CRON_TYPE=daily
 
   crawler-5:
@@ -18,11 +16,9 @@ services:
     build: ./crawler
     privileged: true
     restart: unless-stopped
+    env_file:
+      - stack.env
     environment:
-      - NEXTCLOUD_URL=
-      - NEXTCLOUD_USER_NAME=
-      - NEXTCLOUD_PASSWORD=
-      - NEXTCLOUD_BASE_FOLDER=energy_api_collector/data/
       - CRON_TYPE=5
 
   compromizer:
@@ -30,8 +26,5 @@ services:
     build: ./compromizer
     privileged: true
     restart: unless-stopped
-    environment:
-      - NEXTCLOUD_URL=
-      - NEXTCLOUD_USER_NAME=
-      - NEXTCLOUD_PASSWORD=
-      - NEXTCLOUD_BASE_FOLDER=energy_api_collector/data/
+    env_file:
+      - stack.env
