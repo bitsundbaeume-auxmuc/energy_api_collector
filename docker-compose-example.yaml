@@ -4,6 +4,7 @@ services:
   crawler-daily:
     image: energy_api_collector/crawler
     build: ./crawler
+    privileged: true
     restart: always
     environment:
       - NEXTCLOUD_URL=""
@@ -15,6 +16,7 @@ services:
   crawler-5:
     image: energy_api_collector/crawler
     build: ./crawler
+    privileged: true
     restart: always
     environment:
       - NEXTCLOUD_URL=""
@@ -26,6 +28,7 @@ services:
   compromizer:
     image: energy_api_collector/compromizer
     build: ./compromizer
+    privileged: true
     restart: always
     environment:
       - NEXTCLOUD_URL=""

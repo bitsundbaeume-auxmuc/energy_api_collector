@@ -10,4 +10,5 @@ COPY cron_job_handling.sh cron_job_handling.sh
 
 COPY app /code/app
 
+RUN chmod +x ./cron_job_handling.sh
 ENTRYPOINT ["./cron_job_handling.sh"]
